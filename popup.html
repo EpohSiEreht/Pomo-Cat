@@ -7,9 +7,10 @@
 <html>
   <head>
     <title>Getting Started Extension's Popup</title>
+    <link href='https://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
     <style>
       body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+        font-family: 'VT323', ;
         font-size: 100%;
       }
       #status {
@@ -17,7 +18,8 @@
         white-space: pre;
         text-overflow: ellipsis;
         overflow: hidden;
-        max-width: 400px;
+        width: 200px;
+        height: 350px;
       }
     </style>
 
@@ -26,15 +28,15 @@
     <script src="background.js"></script>
   </head>
   <body>
+    <img src="cat-board.png" id="cat">
     <div id="status">Are you ready?!</div>
-    <h1>Pomodoro Time</h1>
     <div id="timer">
       25:00
     </div>
-    <div>
-      <button id="start">START</button>
-      <button id="stop">STOP</button>
-      <button id="reset">RESET</button>
+    <div class="button-container">
+      <span class="button" id="start">START</span>
+      <span class="button" id="stop">STOP</span>
+      <span class="button" id="reset">RESET</span>
     </div>
     
   </body>

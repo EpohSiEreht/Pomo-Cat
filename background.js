@@ -37,6 +37,8 @@ function timer() {
 // Listen for the start button click
 function start() {
   document.getElementById('start').addEventListener('click', function(){
+    document.getElementById('cat').src = "cat-board.png";
+    document.getElementById('status').innerHTML = "You can do it!";
     counter = setInterval(timer, 1000);
     timer();
   });
@@ -44,16 +46,20 @@ function start() {
 // Listen for the stop button click
 function stop() {
   document.getElementById('stop').addEventListener('click', function(){
+    document.getElementById('cat').src = "cat-boo.png";
+    document.getElementById('status').innerHTML = "MEOWWW!!!!";
     var display = document.querySelector('#timer');
     clearInterval(counter);
     startTime = {},
-    display.innerHTML = "Fail No Good";
+    display.innerHTML = "Booo!";
   });
 }
 // Listen for the reset button click
 function reset() {
   document.getElementById('reset').addEventListener('click', function(){
     var display = document.querySelector('#timer');
+    document.getElementById('cat').src = "cat-reset.png";
+    document.getElementById('status').innerHTML = "Let's try again!";
     clearInterval(counter);
     startTime = {},
     now       = new Date().getTime(),
