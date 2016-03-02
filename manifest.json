@@ -1,21 +1,26 @@
 {
 	"manifest_version": 2,
 
-	"name":"Pomo-Cat",
-	"description": "This extension allows users to set a Pomodoro timer.",
+	"name": "PomoCat",
+	"description": "Pomodoro Cat Timer",
 	"version": "1.0",
-	"background": {
-		"scripts": ["background.js"]
-	},
+
 	"icons": {
-		"128": "icon128.png"
+		"128": "img/icon128.png"
 	},
 	"browser_action": {
-		"default_icon": "icon38.png",
+		"default_icon": "img/icon38.png",
 		"default_popup": "popup.html",
-		"default_title": "Pomodoro Time!"
+		"default_title": "Pomo-Cat!"
+	},
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": false
 	},
 	"permissions": [
-		"activeTab"
+		"activeTab",
+		"storage",
+		"alarms",
+		"notifications"
 	]
 }

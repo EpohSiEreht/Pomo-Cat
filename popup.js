@@ -1,39 +1,63 @@
-// Copyright (c) 2014 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-/**
- * Get the current URL.
- *
- * @param {function(string)} callback - called when the URL of the current tab
- *   is found.
- */
-function getCurrentTabUrl(callback) {
-  // Query filter to be passed to chrome.tabs.query - see
-  // https://developer.chrome.com/extensions/tabs#method-query
-  var queryInfo = {
-    active: true,
-    currentWindow: true
-  };
-
-  chrome.tabs.query(queryInfo, function(tabs) {
-    // chrome.tabs.query invokes the callback with a list of tabs that match the
-    // query. When the popup is opened, there is certainly a window and at least
-    // one tab, so we can safely assume that |tabs| is a non-empty array.
-    // A window can only have one active tab at a time, so the array consists of
-    // exactly one tab.
-    var tab = tabs[0];
-
-    // A tab is a plain object that provides information about the tab.
-    // See https://developer.chrome.com/extensions/tabs#type-Tab
-    var url = tab.url;
-
-    // tab.url is only available if the "activeTab" permission is declared.
-    // If you want to see the URL of other tabs (e.g. after removing active:true
-    // from |queryInfo|), then the "tabs" permission is required to see their
-    // "url" properties.
-    console.assert(typeof url == 'string', 'tab.url should be a string');
-
-    callback(url);
-  });
+function init() {
+	fade();
+	addMessageListeners();
+	clickListener();
+	setTimeout(function() {
+		if(document.querySelector('#timer').innerText !== "Ready?"){
+    	document.getElementById('stop').style.display = "block";
+		} else if(document.querySelector('#timer').innerText === "Ready?"){
+      document.getElementById('start').style.display = "block";
+    }
+	}, 1000);
 }
+
+function fade() {
+  var html = document.querySelector('.js-fade');
+  if (html.classList.contains('is-paused')){
+    html.classList.remove('is-paused');
+  }
+}
+
+function addMessageListeners() {
+	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+		if (request.command === "updateTime") {
+			var time = request.time;
+			document.getElementById("timer").innerText = time;
+		}
+	});
+}
+
+function clickListener() {
+	document.getElementById('start').onclick = function() {
+		chrome.runtime.sendMessage({
+			"command":"startTimer"
+		});
+		document.getElementById('start').style.display = "none";
+    	document.getElementById('stop').style.display = "block";
+    	document.getElementById('cat').src = "img/cat-board.png";
+    	document.getElementById('status').innerHTML = "You can do it!";
+	}
+	document.getElementById('stop').onclick = function() {
+		chrome.runtime.sendMessage({
+			"command": "stopTimer"
+		});
+		document.getElementById('stop').style.display = "none";
+    	document.getElementById('reset').style.display = "block";
+    	document.getElementById('cat').src = "img/cat-boo.png";
+    	document.getElementById('status').innerHTML = "MEOWWW!!!!";
+    	document.querySelector('#timer').innerHTML = "Booo!";
+	}
+	document.getElementById('reset').onclick = function() {
+		chrome.runtime.sendMessage({
+			"command": "resetTimer"
+		});
+		document.getElementById('reset').style.display = "none";
+    	document.getElementById('start').style.display = "block";
+    	document.getElementById('cat').src = "img/cat-reset.png";
+    	document.getElementById('status').innerHTML = "Let's try again!";
+    	var display = document.querySelector('#timer');
+    	display.innerHTML = "25:00";
+	}
+}
+
+document.addEventListener('DOMContentLoaded', init);

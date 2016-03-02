@@ -1,16 +1,45 @@
+@keyframes fadeIn {
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	to {
+		opacity: 0;
+	}
+}
+
+.fade-in {
+	opacity: 0;
+	animation: fadeIn .5s ease-in 1 forwards;
+}
+
+.is-paused {
+	animation-play-state: paused;
+}
+
+.fade-out {
+	opacity: 1;
+	animation: fadeOut .5s ease-in 1 forwards;
+}
+
 body {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+	font-size: 100%;
 	margin: 0;
 	padding: 0;
 	background-color: #88EDA1;
-}
-
-#status {
-	position: absolute;
-	text-align: center;
+	height: 350px;
 	width: 200px;
-	height: 20px;
+}
+#status {
+	position: relative;
+	text-align: center;
 	top: 0;
 	background-color: white;
+	width: 100%;
+	height: 20px;
 }
 
 #cat {
@@ -25,7 +54,7 @@ body {
 	position: absolute;
 	width: 100%;
 	text-align: center;
-	top: 187px;
+	top: 210px;
 	font-size: 40px;
 }
 
@@ -53,12 +82,15 @@ body {
 
 #start {
 	background: #8BD746;
+	display: none;
 }
 
 #stop {
 	background: #D72D27;
+	display: none;
 }
 
 #reset {
 	background: #EDA21C;
+	display: none;
 }
